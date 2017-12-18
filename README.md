@@ -1,0 +1,2 @@
+# mydjango
+django code template
