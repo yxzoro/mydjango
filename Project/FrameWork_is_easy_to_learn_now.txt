@@ -1,0 +1,15 @@
+
+
+
+
+After having learned and used  [Django] + [Flask/SQLAlchemy] 2 frameworks for a period time,
+
+now i understand that those frameworks do same thing:
+
+    1. url router  -->  encapsulate HttpRequest/HttpResponse to get/send data easily.
+    2. db orm      -->  encapsulate sql to crud db data more easily.
+
+so now, it's easy to learn other frameworks like tornado/web.py/... frameworks are same in most ways.
+
+
+
