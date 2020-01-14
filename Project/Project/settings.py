@@ -25,7 +25,7 @@ SECRET_KEY = 'ca$htzzsait(ntxrl16z2zz*=vj^p04ipji06+3-0u*jpj-1xt'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     # 'django.contrib.sessions',
     # 'django.contrib.messages',
     # 'django.contrib.staticfiles',
-    'App1',              #----------- django create [database tables and migrations] according to app list here -------------#
+
+    # django create [database tables and migrations] according to app list here
+    'App1',
 ]
 
 MIDDLEWARE_CLASSES = [

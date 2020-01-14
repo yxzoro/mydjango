@@ -81,3 +81,96 @@ class Ox(models.Model):
         ordering = ["horn_length"]
         verbose_name_plural = "oxen"
 
+
+################################################################################################
+# 4---------------------------Execute Raw SQL------------------------------------- #        
+## if u want to write Raw SQL for complex Multi-Table operations(&& i like raw SQL so much!!) :
+'''
+it’s important to note that the Django database layer is merely an interface to your database. 
+You can access your database via other tools, programming languages or database frameworks.
+'''
+from django.db import connection
+cursor = connection.cursor()
+cursor.execute("""
+       SELECT DISTINCT first_name
+       FROM people_person
+       WHERE last_name = %s""", ['Lennon'])
+result = cursor.fetchone()  # cursor.fetchall()
+# result is querySet
+
+Book.objects.raw('..SQL..')  ## raw() method to use raw SQL
+
+Q()  ## Q() object, like an F object, encapsulates a SQL expression in a Python object. 
+# In general, Q() objects make it possible to define and reuse conditions. This permits the 
+# construction of complex database queries using | (OR) and & (AND) operators; in particular, 
+# it is not otherwise possible to use OR in QuerySets.
+
+
+# 5-----------------------------Model Python API---------------------------------- #    
+# operate DB models in Python code:
+
+from app.models import Publisher
+
+# create
+p = Publisher(name='xx')
+p.save()
+p = Publisher.objects.create(name='yy')
+
+# delete
+p.delete()
+Publisher.objects.all().delete()
+
+# update
+p.update(name='zz')
+Publisher.objects.all().update(country='USA')
+
+# select
+Publisher.objects.all()
+Publisher.objects.filter(name='vv')
+Publisher.objects.filter(name__contains="x")
+
+# get object by ForeignKey 
+b = Book.objects.get(name='The Django Book')
+b.publisher  
+b.publisher.name  # = 'Oreilly'
+# get object by reverse ForeignKey                    ##  ****django create " modelname_set " as reverse foreignkey automaticaly****
+p = Publisher.objects.get(name='Oreilly')
+p.book_set.all()  # [<Book: The Django Book>, <Book: Dive Into Python>...]
+
+# example:
+# b = Book.objects.get(id=50)
+# b.authors.all()
+# [<Author: Adrian Holovaty>, <Author: Jacob Kaplan-Moss>]
+# b.authors.filter(first_name='Adrian')
+# [<Author: Adrian Holovaty>]
+# b.authors.filter(first_name='Adam')
+# []
+# a = Author.objects.get(first_name='Adrian', last_name='Holovaty')
+# a.book_set.all()
+# [<Book: The Django Book>, <Book: Adrian's Other Book>]
+
+
+# more methods
+
+Publisher.objects.order_by("name")
+Publisher.objects.filter(country="U.S.A.").order_by("-name")
+Publisher.objects.order_by('name')[0:2]
+
+
+
+# 6----------------------------change DB schema---------------------------------- #    
+## Django only create new tables for you, not change DB schema/DB structure when you change Models definition...
+## So you can only Change Your Database's Table Structure Youself By SQL when you want to change Models definition...
+
+
+#--------------------------------------深入理解掌握Django Model--------------------------------------------#
+
+# 1----------------------------阅读django官网文档note[先看完N之后再整理]---------------------------------- #    
+
+# 2----------------------------使用Pycharm Debug Django源码去深入理解框架运行机制------------------------- #    
+
+# 3----------------------------通过练习写SPA小程序[重点后台DB设计+开发]来熟悉Model层的使用-------------- #    
+
+
+
+

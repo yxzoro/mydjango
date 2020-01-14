@@ -15,15 +15,14 @@ Including another URLconf
 """
 from django.conf.urls import url
 from . import views
-from views import MyClassView
 
 urlpatterns = [
-    url(r'^test/$', views.test),                       # method view
-    url(r'^myclassview/$', MyClassView.as_view() ),    # class view
+    url(r'^test$', views.test),   # method view,  must end with 'test'
+    url(r'^test/$', views.test),  # method view,  must end with 'test/'
+
+    url(r'^myclassview/$', views.MyClassView.as_view() ),    # class view
     url(r'^time/(\d+)/(\d+)$', views.get_time),        # Regular Expressions in ()    # param1 param2 不命名则是位置参数
     url(r'^time/(?P<year>\d{4})/(?P<month>\d{2})/$', views.get_date),  # year month  命名参数 更好
-    
-    
 ]
 
 
