@@ -8,7 +8,7 @@ import manage
 import time
 
 # load config
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "Project.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "myproject.settings")
 
 # run db commands here:
 commands = ['check', 'makemigrations', 'migrate']
